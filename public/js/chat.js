@@ -1,6 +1,6 @@
 const socket = io()
 
-// ELEMENTS FROM THE DOM. Convencionalmente se utiliza el signo $ antes del nobre de la variable.
+// ELEMENTS FROM THE DOM. Convencionalmente se utiliza el signo $ antes del nombre de la variable.
 const $messageForm = document.querySelector('#message-form')
 const $messageFormInput = $messageForm.querySelector('input')
 const $messageFormButton = $messageForm.querySelector('button')
@@ -13,7 +13,9 @@ const locationMessageTemplate = document.querySelector('#location-message-templa
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 // OPTIONS -> vienen del submit del form del HTML en la URL, se acceden a traves de la variable location.search
-const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+const { username, room, joinRoom } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+
+const finalRoom = joinRoom !== '' ? joinRoom : room
 
 const autoscroll = () => {
     // New message element
@@ -111,7 +113,7 @@ $sendLocationButton.addEventListener('click', () => {
 
 })
 
-socket.emit('join', { username, room }, (error) => {
+socket.emit('join', { username, room: finalRoom }, (error) => {
     if (error) {
         alert(error)
         location.href = '/'

@@ -49,18 +49,6 @@ const getUsersInRoom = (room) => {
     return usersRoom = users.filter((user) => user.room === room)    //forma abreviada sin Return en la funcion. Devuelve los rooms
 }
 
-const usr = addUser({
-    id: 1,
-    username: 'Cris',
-    room: 'rr'
-})
-
-console.log(usr)
-
-const gtusr = getUser(1)
-
-console.log(gtusr)
-
 module.exports = {
     addUser,
     removeUser,

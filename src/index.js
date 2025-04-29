@@ -5,6 +5,7 @@ const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { generateMessages, generateLocationMessage } = require('./utils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
+const { getRooms, addRoom, removeRoom } = require('./utils/rooms')
 
 const app = express()
 //esta configuración igual siempre la hace express detrás de escena, pero ahora la hacemos explicita para poder configurar el websocket 
@@ -17,7 +18,6 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
-let count = 0
 
 // server (emit) -> client (on - receive)
 // client (emit) -> server (on - receive)
@@ -42,6 +42,8 @@ io.on('connection', (socket) => {
 
         socket.join(user.room)
 
+        addRoom(user.room)
+
         io.to(user.room).emit('roomData', {
             room: user.room,
             users: getUsersInRoom(user.room)
@@ -49,6 +51,11 @@ io.on('connection', (socket) => {
 
         socket.emit('message', generateMessages('Admin', 'Welcome!'))  // Emite solo al cliente que inicio el socket
         socket.broadcast.to(user.room).emit('message', generateMessages('Admin', `${user.username} has joined!`))
+    })
+
+    socket.on('roomsList', () => {
+        const rooms = getRooms()
+        socket.emit('allRoomsList', { rooms })
     })
 
     socket.on('sendMessage', (message, callback) => {
@@ -79,6 +86,7 @@ io.on('connection', (socket) => {
                 room: user.room,
                 users: getUsersInRoom(user.room)
             })
+            removeRoom(user.room)
         }
 
     })
