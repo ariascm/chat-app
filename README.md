@@ -41,12 +41,12 @@ Aplicación de chat en tiempo real desarrollada con Node.js, Express y Socket.io
 ## 📂 Estructura del proyecto
 
 chat-app/
-├── public/           # Archivos estáticos (JS, CSS, HTML)
-├── src/              # Lógica del servidor (Express + Socket.io)
-├── views/            # Plantillas Handlebars
-├── package.json
-└── README.md
+   ├── public/           # Archivos estáticos (JS, CSS, HTML)
+   ├── src/              # Lógica del servidor (Express + Socket.io)
+   ├── views/            # Plantillas Handlebars
+   ├── package.json
+   └── README.md
 
 ## 👤 Autor
-Cristian Arias
-GitHub - @ariascm
+   Cristian Arias
+   GitHub - @ariascm
