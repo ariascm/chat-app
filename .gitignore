@@ -1,2 +1,14 @@
-# Node modules
+# node modules
 node_modules/
+
+# Logs
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs/editors
+.vscode/
+.idea/
+*.swp

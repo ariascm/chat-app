@@ -18,7 +18,7 @@ const addRoom = (newRoom) => {
 const removeRoom = (roomName) => {
     isUserInRoom = users.getUsersInRoom(roomName)
 
-    if (isUserInRoom.length) {  //si hay algun usuario, retornar sin eliminar el room
+    if (isUserInRoom.length) {
         return
     }
     const index = getRooms().findIndex((room) => room === roomName)

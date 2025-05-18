@@ -1,6 +1,6 @@
 const socket = io()
 
-// ELEMENTS FROM THE DOM. Convencionalmente se utiliza el signo $ antes del nombre de la variable.
+// ELEMENTS FROM THE DOM.
 const $messageForm = document.querySelector('#message-form')
 const $messageFormInput = $messageForm.querySelector('input')
 const $messageFormButton = $messageForm.querySelector('button')
@@ -12,7 +12,7 @@ const messageTemplate = document.querySelector('#message-template').innerHTML   
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
-// OPTIONS -> vienen del submit del form del HTML en la URL, se acceden a traves de la variable location.search
+// OPTIONS
 const { username, room, joinRoom } = Qs.parse(location.search, { ignoreQueryPrefix: true })
 
 const finalRoom = joinRoom !== '' ? joinRoom : room
@@ -22,9 +22,9 @@ const autoscroll = () => {
     const $newMessage = $messages.lastElementChild
 
     //  Height of the new message
-    const newMessageStyles = getComputedStyle($newMessage)  // obtiene las propiedades del nuevo mensaje (harcoded en el CSS)
-    const newMessageMargin = parseInt(newMessageStyles.marginBottom)    // Extraemos solo el marginBottom 16px a INT = 16
-    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin   // Sumamos la altura del mensaje + el margen
+    const newMessageStyles = getComputedStyle($newMessage)
+    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
 
     //Visible height
     const visibleHeight = $messages.offsetHeight
@@ -33,22 +33,22 @@ const autoscroll = () => {
     const containerHeight = $messages.scrollHeight
 
     // How far have I scrolled?
-    const scrollOffset = $messages.scrollTop + visibleHeight    //Sumamos el recorrido del scroll + el tamaño de lo visible del contenedor
+    const scrollOffset = $messages.scrollTop + visibleHeight
 
-    // ACA VA LA MAGIA: Si el tamaño del contenedor - el nuevo mensaje es MENOR O IGUAL a todo lo scrolleado significa que estamos al final
+
     if (containerHeight - newMessageHeight <= scrollOffset + 1) {
-        $messages.scrollTop = $messages.scrollHeight    // Enviamos el scroll hasta el final (tamaño completo del container)
+        $messages.scrollTop = $messages.scrollHeight
     }
 }
 
 socket.on('message', (message) => {
     console.log(message)
-    const html = Mustache.render(messageTemplate, {     //Renderiza el template HTML con las variables que se pasan por argumento
+    const html = Mustache.render(messageTemplate, {
         username: message.username,
         message: message.text,
-        createdAt: moment(message.createdAt).format('h:mm a')   //momentJS, libreria agregada por CDN en el index.html
+        createdAt: moment(message.createdAt).format('h:mm a')
     })
-    $messages.insertAdjacentHTML('beforeend', html) //Inserta el contenido renderizado en el contenedor <div> en el HTML
+    $messages.insertAdjacentHTML('beforeend', html)
     autoscroll()
 })
 
@@ -73,15 +73,14 @@ socket.on('roomData', ({ room, users }) => {
 })
 
 $messageForm.addEventListener('submit', (event) => {
-    event.preventDefault()  //prevenir que al apretar el boton (submit por defecto) dentro del form, la pagina se refresque
+    event.preventDefault()
 
-    $messageFormButton.setAttribute('disabled', 'disabled') //Disable send button
+    $messageFormButton.setAttribute('disabled', 'disabled')
 
-    // const message = document.querySelector('input')      //Se puede acceder al input así (aunque si hubieran mas input, habria problema)
-    const message = event.target.elements.message.value           //ó se puede acceder atraves del evento, target (message-form), elementos y el "name" del elemento
+    const message = event.target.elements.message.value
 
     socket.emit('sendMessage', message, (error) => {
-        $messageFormButton.removeAttribute('disabled')  //Eliminamos el atributo que lo deshabilita
+        $messageFormButton.removeAttribute('disabled')
         $messageFormInput.value = ''
         $messageFormInput.focus()
 
@@ -100,12 +99,12 @@ $sendLocationButton.addEventListener('click', () => {
 
     $sendLocationButton.setAttribute('disabled', 'disabled')
 
-    navigator.geolocation.getCurrentPosition((position) => {        //comando incluido en los navegadores para obtener geolocation
+    navigator.geolocation.getCurrentPosition((position) => {
 
         socket.emit('sendLocation', {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
-        }, () => {       //Seteo el acknowledgment (espera por una confirmacion del servidor (enviada por callback))
+        }, () => {
             $sendLocationButton.removeAttribute('disabled')
             console.log('Location shared!')
         })

@@ -31,7 +31,7 @@ const addUser = ({ id, username, room }) => {
 }
 
 const removeUser = (id) => {
-    const index = users.findIndex((user) => user.id === id) //retorna TRUE si encontre un match
+    const index = users.findIndex((user) => user.id === id)
 
     if (index !== -1) {
         return users.splice(index, 1)[0]
@@ -39,14 +39,14 @@ const removeUser = (id) => {
 }
 
 const getUser = (id) => {
-    return users.find((user) => { //Usamos find en vez de filter, ya que una vez que lo encontramos, se para la busqueda y devolvemos
+    return users.find((user) => {
         return user.id === id
     })
 }
 
 const getUsersInRoom = (room) => {
     room = room.trim().toLowerCase()
-    return usersRoom = users.filter((user) => user.room === room)    //forma abreviada sin Return en la funcion. Devuelve los rooms
+    return usersRoom = users.filter((user) => user.room === room)
 }
 
 module.exports = {

@@ -36,14 +36,13 @@
             <p>{{message}}</p>
         </div>
     </script>
-    <!-- Estos <script> no se renderizan en el HTML hasta que MUSTACHE los renderiza y luego los agrega con innerHtml -->
+
     <script id="location-message-template" type="text/html">
         <div class="message">
             <p>
                 <span class="message__name">{{username}}</span>
                 <span class="message__meta">{{createdAt}}</span>
             </p>
-            <!-- Usamos target blank para se abra el link en una nueva ventana y no se salga el chat -->
             <p><a href="{{url}}" target="_blank">My current location</a></p> 
         </div>
     </script>
@@ -58,7 +57,6 @@
         </ul>
     </script>
 
-    <!-- Mustache -> Renderizar templates dinamicamente al HTML. MOMENT-> Formatear Tiempo. QS -> Formatear query strings -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
