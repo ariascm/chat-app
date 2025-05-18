@@ -48,5 +48,5 @@ Aplicación de chat en tiempo real desarrollada con Node.js, Express y Socket.io
     └── README.md
 
 ## 👤 Autor
-Cristian Arias
-GitHub - @ariascm
+    Cristian Arias
+    GitHub - @ariascm
